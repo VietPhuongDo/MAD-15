@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "607142404965",
-    "project_id": "habbit-aed19",
-    "storage_bucket": "habbit-aed19.appspot.com"
+    "project_number": "425700343454",
+    "project_id": "test-5e101",
+    "storage_bucket": "test-5e101.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607142404965:android:ade30cf9b792515079378c",
+        "mobilesdk_app_id": "1:425700343454:android:6de7b2824bdbc485a5858f",
         "android_client_info": {
-          "package_name": "com.habbit.app"
+          "package_name": "com.test.test_firebase"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "607142404965-7v0kngd3o3cu1skogg2b440aobsjabkl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyClDmhqQD7wTXF_yviA26nBvLcKQZl0Grc"
+          "current_key": "AIzaSyAnzRbyTIv9HEa7pwYChJekPYTHw05rseQ"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "607142404965-7v0kngd3o3cu1skogg2b440aobsjabkl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

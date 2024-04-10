@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,21 +46,29 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyB0wb4b1tgfcLsJMW6dfKk0p6lj9gQD99o',
+    appId: '1:425700343454:web:6ca120c0561fc47ba5858f',
+    messagingSenderId: '425700343454',
+    projectId: 'test-5e101',
+    authDomain: 'test-5e101.firebaseapp.com',
+    storageBucket: 'test-5e101.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyClDmhqQD7wTXF_yviA26nBvLcKQZl0Grc',
-    appId: '1:607142404965:android:ade30cf9b792515079378c',
-    messagingSenderId: '607142404965',
-    projectId: 'habbit-aed19',
-    storageBucket: 'habbit-aed19.appspot.com',
+    apiKey: 'AIzaSyAnzRbyTIv9HEa7pwYChJekPYTHw05rseQ',
+    appId: '1:425700343454:android:6de7b2824bdbc485a5858f',
+    messagingSenderId: '425700343454',
+    projectId: 'test-5e101',
+    storageBucket: 'test-5e101.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDHOc7fQ_Pjzvidfke8bjuvphOoV-MKI8g',
-    appId: '1:607142404965:ios:c8d42c823b6fe95c79378c',
-    messagingSenderId: '607142404965',
-    projectId: 'habbit-aed19',
-    storageBucket: 'habbit-aed19.appspot.com',
-    iosClientId: '607142404965-6voq1h5o56it12kv9s04mgtn1b3knvd7.apps.googleusercontent.com',
-    iosBundleId: 'com.habbit.app',
+    apiKey: 'AIzaSyDYwfU-uHmkJPrMEDI2JYB_4tUhHvpDAgo',
+    appId: '1:425700343454:ios:49103d2d5a6be9b4a5858f',
+    messagingSenderId: '425700343454',
+    projectId: 'test-5e101',
+    storageBucket: 'test-5e101.appspot.com',
+    iosBundleId: 'com.test.testFirebase',
   );
 }

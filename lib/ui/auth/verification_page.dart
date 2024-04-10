@@ -1,12 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:habit_app/ui/components/app_snackbar.dart';
-import 'package:habit_app/ui/components/custom_scaffold.dart';
-import 'package:habit_app/utils/labels.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../root.dart';
+import '../../utils/labels.dart';
+import '../components/app_snackbar.dart';
+import '../components/custom_scaffold.dart';
 import 'providers/auth_provider.dart';
 
 class VerificationPage extends ConsumerStatefulWidget {

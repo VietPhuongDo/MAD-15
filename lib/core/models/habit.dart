@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:habit_app/utils/formats.dart';
+import '../../utils/formats.dart';
+
 
 class Habit {
    String id;
@@ -11,7 +12,8 @@ class Habit {
    bool notification;
    DateTime createdAt;
    String createdBy;
-
+   //List<int> completedDays;
+   List<String> completedDays;
   Habit({
     required this.id,
     required this.name,
@@ -20,7 +22,9 @@ class Habit {
     required this.notification,
     required this.createdAt,
     required this.createdBy,
+    required this.completedDays,
   });
+
 
   Map<String, dynamic> toMap() {
     return {
@@ -30,6 +34,7 @@ class Habit {
       'notification': notification,
       'createdAt': Timestamp.fromDate(createdAt),
       'createdBy': createdBy,
+      'completedDays': completedDays,
     };
   }
 
@@ -48,6 +53,7 @@ class Habit {
       notification: map['notification'] ?? false,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
       createdBy: map['createdBy'] ?? '',
+      completedDays: List<String>.from(map['completedDays'] ?? []),
     );
   }
 
@@ -70,9 +76,6 @@ class Habit {
   //     createdBy: createdBy ?? this.createdBy,
   //   );
   // }
-
-  
-
   factory Habit.empty(Map<String, int> fr) {
     return Habit(
       id: '',
@@ -82,6 +85,7 @@ class Habit {
       notification: false,
       createdAt: DateTime.now(),
       createdBy: '',
+      completedDays: [],
     );
   }
   

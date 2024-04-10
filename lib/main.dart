@@ -1,21 +1,19 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:habit_app/firebase_options.dart';
-import 'package:habit_app/router.dart';
-import 'package:habit_app/ui/auth/login_page.dart';
-import 'package:habit_app/ui/auth/reset_password_page.dart';
-import 'package:habit_app/ui/auth/sign_up_page.dart';
-import 'package:habit_app/ui/colors.dart';
-import 'package:habit_app/ui/dashboard/dashboard.dart';
-import 'package:habit_app/ui/home/home_page.dart';
-import 'package:habit_app/ui/splash/splash_page.dart';
-import 'package:habit_app/utils/constants.dart';
-import 'package:habit_app/utils/labels.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-void main() async {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:test_firebase/router.dart';
+import 'package:test_firebase/ui/colors.dart';
+import 'package:test_firebase/ui/components/status_button.dart';
+import 'package:test_firebase/ui/splash/splash_page.dart';
+import 'package:test_firebase/utils/constants.dart';
+import 'package:test_firebase/utils/labels.dart';
+import 'firebase_options.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -107,34 +105,35 @@ class MyApp extends StatelessWidget {
         textTheme: base
             .apply(fontFamily: Constants.manrope)
             .copyWith(
-              headlineLarge: const TextStyle(fontFamily: Constants.klasik),
-              headlineMedium: const TextStyle(
-                fontFamily: Constants.klasik,
-                fontSize: 32,
-              ),
-              headlineSmall: const TextStyle(fontFamily: Constants.klasik),
-              titleMedium: const TextStyle(
-                  fontWeight: FontWeight.bold, fontFamily: Constants.manrope),
-              labelLarge: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: Constants.manrope,
-                fontSize: 17,
-              ),
-              bodyLarge: const TextStyle(
-                fontFamily: Constants.manrope,
-                fontSize: 16,
-              ),
-            )
+          headlineLarge: const TextStyle(fontFamily: Constants.klasik),
+          headlineMedium: const TextStyle(
+            fontFamily: Constants.klasik,
+            fontSize: 32,
+          ),
+          headlineSmall: const TextStyle(fontFamily: Constants.klasik),
+          titleMedium: const TextStyle(
+              fontWeight: FontWeight.bold, fontFamily: Constants.manrope),
+          labelLarge: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: Constants.manrope,
+            fontSize: 17,
+          ),
+          bodyLarge: const TextStyle(
+            fontFamily: Constants.manrope,
+            fontSize: 16,
+          ),
+        )
             .apply(
-              bodyColor: AppColors.textColor,
-              displayColor: AppColors.textColor,
-            )
+          bodyColor: AppColors.textColor,
+          displayColor: AppColors.textColor,
+        )
             .copyWith(
-              bodySmall: const TextStyle(
-                color: AppColors.lightText,
-              ),
-            ),
+          bodySmall: const TextStyle(
+            color: AppColors.lightText,
+          ),
+        ),
       ),
+      //home:const SplashPage(),
       initialRoute: SplashPage.route,
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
@@ -145,10 +144,80 @@ extension CustomStyles on TextTheme {
   TextStyle? get specialTitle => titleMedium?.copyWith(fontSize: 18);
   TextStyle? get titleMedium2 => bodySmall?.copyWith(fontSize: 16);
 }
+class YourWidget extends StatefulWidget {
+  @override
+  _YourWidgetState createState() => _YourWidgetState();
+}
 
-// class AppStyles {
-//  static TextStyle get title => const TextStyle(
-//         fontSize: 18,
-//         fontWeight: FontWeight.bold,
-//       );
-// }
+class _YourWidgetState extends State<YourWidget> {
+  List<DateTime> habitData = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        future: fetchDataFromFirebase(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            habitData = snapshot.data as List<DateTime>;
+            return GridView.count(
+              crossAxisCount: 7,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              childAspectRatio: 47 / 72,
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+              padding: EdgeInsets.all(6),
+              children: habitData.map((e) => buildGridItem(e)).toList(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget buildGridItem(DateTime date) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Color(0xFFFFF3E9),
+      ),
+      child: Column(
+        children: [
+          Spacer(flex: 2),
+          Text(
+            '${date.day}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: date.month != DateTime.now().month ? Color(0xFF573353).withOpacity(0.3) : null,
+            ),
+          ),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: StatusButton(value: 1),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<List<DateTime>> fetchDataFromFirebase() async {
+    var habitData = <DateTime>[];
+    var snapshot = await FirebaseFirestore.instance.collection('habits').get();
+    snapshot.docs.forEach((doc) {
+      var date = (doc.data() as Map)['date'].toDate();
+      habitData.add(date);
+    });
+    return habitData;
+  }
+}
+
+

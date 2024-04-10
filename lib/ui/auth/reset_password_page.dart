@@ -4,15 +4,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:habit_app/ui/auth/providers/auth_provider.dart';
-import 'package:habit_app/ui/auth/widgets/email_field.dart';
-import 'package:habit_app/ui/components/app_back_button.dart';
-import 'package:habit_app/ui/components/app_snackbar.dart';
-import 'package:habit_app/ui/components/big_button.dart';
-import 'package:habit_app/utils/assets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:test_firebase/ui/auth/providers/auth_provider.dart';
+import 'package:test_firebase/ui/auth/widgets/email_field.dart';
 
+import '../../utils/assets.dart';
 import '../../utils/labels.dart';
+import '../components/app_back_button.dart';
+import '../components/app_snackbar.dart';
+import '../components/big_button.dart';
 import '../components/circle_button.dart';
 
 class ResetPasswordPage extends HookConsumerWidget {
