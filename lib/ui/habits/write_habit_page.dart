@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:habit_app/core/models/habit.dart';
-import 'package:habit_app/ui/components/app_back_button.dart';
-import 'package:habit_app/ui/components/custom_scaffold.dart';
-import 'package:habit_app/ui/components/loading_layer.dart';
-import 'package:habit_app/ui/components/status_button.dart';
-import 'package:habit_app/ui/habits/providers/write_habit_view_model_provider.dart';
-import 'package:habit_app/ui/habits/widgets/custom_switch.dart';
-import 'package:habit_app/utils/assets.dart';
-import 'package:habit_app/utils/formats.dart';
-import 'package:habit_app/utils/labels.dart';
-import 'package:habit_app/utils/utils.dart';
-import 'package:habit_app/utils/validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:test_firebase/ui/habits/providers/write_habit_view_model_provider.dart';
+import 'package:test_firebase/ui/habits/widgets/custom_switch.dart';
+import 'package:test_firebase/utils/formats.dart';
 
+import '../../core/models/habit.dart';
+import '../../utils/assets.dart';
+import '../../utils/labels.dart';
+import '../../utils/utils.dart';
+import '../../utils/validators.dart';
+import '../components/app_back_button.dart';
+import '../components/custom_scaffold.dart';
+import '../components/loading_layer.dart';
+import '../components/status_button.dart';
 import 'widgets/add_reminder_sheet.dart';
 
 class WriteHabitPage extends HookConsumerWidget {

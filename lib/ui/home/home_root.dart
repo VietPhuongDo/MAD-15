@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:habit_app/core/models/habit.dart';
-import 'package:habit_app/ui/habits/habit_page.dart';
-import 'package:habit_app/ui/habits/write_habit_page.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../core/models/habit.dart';
+import '../habits/habit_page.dart';
+import '../habits/write_habit_page.dart';
 import 'home_page.dart';
 
 enum HomeState { home, writeHabit, habit }

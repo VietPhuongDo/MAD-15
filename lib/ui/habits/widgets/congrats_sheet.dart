@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:habit_app/main.dart';
-import 'package:habit_app/ui/components/big_button.dart';
-import 'package:habit_app/ui/components/circle_button.dart';
-import 'package:habit_app/utils/assets.dart';
-import 'package:habit_app/utils/labels.dart';
+import 'package:test_firebase/ui/habits/write_habit_page.dart';
+
+import '../../../utils/assets.dart';
+import '../../../utils/labels.dart';
+import '../../components/big_button.dart';
+import '../../components/circle_button.dart';
+import '../../dashboard/statistics.dart';
 
 class CongratsSheet extends StatelessWidget {
   const CongratsSheet({super.key});
@@ -39,13 +41,15 @@ class CongratsSheet extends StatelessWidget {
                   Text(
                     'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris',
                     textAlign: TextAlign.center,
-                    style: style.titleMedium2,
+                    style: style.titleMedium,
                   ),
                   const SizedBox(height: 28),
                   BigButton(
                     elevation: 0,
                     onPressed: () {
-                     
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => WriteHabitPage()), // Thay NextPage() bằng trang tiếp theo bạn muốn chuyển hướng đến
+                      );
                     },
                     text: Labels.createNewHabit,
                   ),
@@ -54,7 +58,11 @@ class CongratsSheet extends StatelessWidget {
                     elevation: 0,
                     color: scheme.primaryContainer,
                     textColor: scheme.onPrimary,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => StatisticsPage()), // Thay NextPage() bằng trang tiếp theo bạn muốn chuyển hướng đến
+                      );
+                    },
                     child: const Text(Labels.continue_),
                   ),
                 ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:habit_app/ui/colors.dart';
-import 'package:habit_app/ui/components/big_button.dart';
-import 'package:habit_app/ui/habits/providers/write_habit_view_model_provider.dart';
-import 'package:habit_app/ui/habits/widgets/custom_switch.dart';
-import 'package:habit_app/utils/assets.dart';
-import 'package:habit_app/utils/labels.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../utils/assets.dart';
+import '../../../utils/labels.dart';
+import '../../components/big_button.dart';
+import '../providers/write_habit_view_model_provider.dart';
+import 'custom_switch.dart';
 
 class AddReminderSheet extends ConsumerWidget {
   const AddReminderSheet({super.key});

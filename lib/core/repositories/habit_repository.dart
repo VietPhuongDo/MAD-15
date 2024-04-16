@@ -20,7 +20,17 @@ class HabitRepository {
           SetOptions(merge: true),
         );
   }
-
+  Future<void> updateHabit(Habit habit) async {
+    await _firestore
+        .collection('habits')
+        .doc(habit.id)
+        .update(
+      habit.toMap(),
+    );
+  }
+  Future<void> deleteHabit(String habitId) async {
+    await _firestore.collection('habits').doc(habitId).delete();
+  }
   Stream<List<Habit>> getHabits(String uid) {
     return _firestore.collection('habits').where('createdBy',isEqualTo:uid ).snapshots().map(
           (snapshot) => snapshot.docs

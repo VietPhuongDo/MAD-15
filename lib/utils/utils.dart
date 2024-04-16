@@ -2,11 +2,14 @@ class Utils {
   static List<DateTime> get weekDays => List.generate(
         7,
         (index) {
-          return DateTime.now()
-              .add(Duration(days: index - DateTime.now().weekday));
+          if(DateTime.now().weekday==DateTime.sunday){
+            return DateTime.now().add(Duration(days: index));
+          }
+          else {
+            return DateTime.now().add(Duration(days: index - DateTime.now().weekday));
+          }
         },
       );
-
 
 
   static List<DateTime> allDaysOfMonth(DateTime month) {

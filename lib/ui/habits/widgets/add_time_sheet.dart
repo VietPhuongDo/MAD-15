@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:habit_app/main.dart';
-import 'package:habit_app/utils/labels.dart';
+
+import '../../../utils/labels.dart';
+
 
 class AddTimeSheet extends StatelessWidget {
   const AddTimeSheet({super.key});
@@ -11,6 +12,7 @@ class AddTimeSheet extends StatelessWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme;
     final scheme = theme.colorScheme;
+    var specialTitle;
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -26,7 +28,7 @@ class AddTimeSheet extends StatelessWidget {
               ),
               Text(
                 Labels.addReminder,
-                style: style.specialTitle,
+                style: style.titleLarge,
               ),
               CupertinoButton(
                 child: const Text(Labels.save),

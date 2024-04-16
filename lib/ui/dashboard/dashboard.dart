@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:habit_app/ui/components/app_snackbar.dart';
-import 'package:habit_app/ui/habits/providers/write_habit_view_model_provider.dart';
-import 'package:habit_app/ui/home/home_root.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../utils/assets.dart';
+import '../components/app_snackbar.dart';
+import '../habits/providers/write_habit_view_model_provider.dart';
+import '../home/home_page.dart';
+import '../home/home_root.dart';
 
 class Dashboard extends ConsumerWidget {
   const Dashboard({super.key});
@@ -58,7 +59,8 @@ class Dashboard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                },
                 icon: SvgPicture.asset(
                   Assets.home,
                   // height: 24,
