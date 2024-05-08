@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=D:\baitap\mobile\flutter"
-export "FLUTTER_APPLICATION_PATH=D:\baitap\mobile\test_firebase"
+export "FLUTTER_ROOT=C:\Users\lucpv\dev\flutter\flutter"
+export "FLUTTER_APPLICATION_PATH=D:\Mobile\flutter\MAD-15"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"
