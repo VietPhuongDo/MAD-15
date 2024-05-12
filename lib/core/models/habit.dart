@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 
 import '../../utils/formats.dart';
 
-
 class Habit {
-   String id;
-   String name;
-   Map<String, int> frequency;
-   List<TimeOfDay> reminders;
-   bool notification;
-   DateTime createdAt;
-   String createdBy;
-   //List<int> completedDays;
-   List<String> completedDays;
+  String id;
+  String name;
+  String category; // Trường category mới
+  Map<String, int> frequency;
+  List<TimeOfDay> reminders;
+  bool notification;
+  DateTime createdAt;
+  String createdBy;
+  List<String> completedDays;
+
   Habit({
     required this.id,
     required this.name,
+    required this.category,
     required this.frequency,
     required this.reminders,
     required this.notification,
@@ -25,10 +26,10 @@ class Habit {
     required this.completedDays,
   });
 
-
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'category': category,
       'frequency': frequency,
       'reminders': reminders.map((x) => x.labelTime).toList(),
       'notification': notification,
@@ -43,11 +44,12 @@ class Habit {
     return Habit(
       id: doc.id,
       name: map['name'] ?? '',
+      category: map['category'] ?? '',
       frequency: Map<String, int>.from(map['frequency']),
       reminders: List<TimeOfDay>.from(
         map['reminders']?.map(
               (x) => Parsers.parse(x),
-            ) ??
+        ) ??
             [],
       ),
       notification: map['notification'] ?? false,
@@ -57,29 +59,11 @@ class Habit {
     );
   }
 
-  // Habit copyWith({
-  //   String? id,
-  //   String? name,
-  //   Map<String, int>? frequency,
-  //   List<TimeOfDay>? reminders,
-  //   bool? notification,
-  //   DateTime? createdAt,
-  //   String? createdBy,
-  // }) {
-  //   return Habit(
-  //     id: id ?? this.id,
-  //     name: name ?? this.name,
-  //     frequency: frequency ?? this.frequency,
-  //     reminders: reminders ?? this.reminders,
-  //     notification: notification ?? this.notification,
-  //     createdAt: createdAt ?? this.createdAt,
-  //     createdBy: createdBy ?? this.createdBy,
-  //   );
-  // }
   factory Habit.empty(Map<String, int> fr) {
     return Habit(
       id: '',
       name: '',
+      category: '',
       frequency: fr,
       reminders: [],
       notification: false,
@@ -88,5 +72,4 @@ class Habit {
       completedDays: [],
     );
   }
-  
 }

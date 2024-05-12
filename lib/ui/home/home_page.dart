@@ -29,11 +29,11 @@ class HomePage extends ConsumerWidget {
       leading: CircleButton(
         child: Center(
           child: GestureDetector(
-            // onTap: () async {
-            //   await ref.read(authProvider).signOut();
-            //   Navigator.pushNamedAndRemoveUntil(
-            //       context, Root.route, (route) => false);
-            // },
+                  onTap: () async {
+                    await ref.read(authProvider).signOut();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Root.route, (route) => false);
+                  },
             child: SvgPicture.asset(
               Assets.menuIcon,
               height: 24,
@@ -41,10 +41,6 @@ class HomePage extends ConsumerWidget {
             ),
           ),
         ),
-      ),
-      traling: CircleAvatar(
-        radius: 22,
-        backgroundImage: AssetImage(Assets.profile),
       ),
       body: ListView(
         children: [

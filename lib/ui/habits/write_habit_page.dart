@@ -49,10 +49,31 @@ class WriteHabitPage extends HookConsumerWidget {
                             Expanded(
                               child: TextFormField(
                                 textCapitalization: TextCapitalization.sentences,
+                                initialValue: model.initial.category,
+                                decoration: InputDecoration(
+                                  fillColor: scheme.surface,
+                                  hintText: "Enter category",
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 16,
+                                  ),
+                                ),
+                                validator: Validators.required,
+                                onSaved: (v) => model.initial.category = v!,
+                              ),
+                            ),
+                            SizedBox(width: 12),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                textCapitalization: TextCapitalization.sentences,
                                 initialValue: model.initial.name,
                                 decoration: InputDecoration(
                                   fillColor: scheme.surface,
-                                  hintText: Labels.enterHabitName,
+                                  hintText: "Enter Habit's name",
                                   contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20,
                                     vertical: 16,
@@ -63,35 +84,6 @@ class WriteHabitPage extends HookConsumerWidget {
                               ),
                             ),
                             SizedBox(width: 12),
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  height: 52,
-                                  width: 52,
-                                  child: Card(
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        Assets.reader,
-                                        height: 35,
-                                        width: 35,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  child: Transform.translate(
-                                    offset: const Offset(4, -4),
-                                    child: CircleAvatar(
-                                      radius: 9,
-                                      backgroundColor: scheme.primary,
-                                      foregroundColor: scheme.surface,
-                                      child: Icon(Icons.add_rounded, size: 16),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
                           ],
                         ),
                         const SizedBox(height: 8),
@@ -251,13 +243,6 @@ class WriteHabitPage extends HookConsumerWidget {
                             Text(
                               Labels.startThisHabit,
                               style: style.headlineSmall,
-                            ),
-                            Text(
-                              Labels.ullamco,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: style.bodySmall!.color,
-                              ),
                             ),
                             const SizedBox(height: 16),
                             SvgPicture.asset(

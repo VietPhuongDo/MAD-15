@@ -112,51 +112,25 @@ class HabbitPage extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(flex: 2),
-                          Text(
-                            habit.name,
-                            style: style.titleMedium,
-                          ),
-                          const Spacer(flex: 2),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.notifications_none_outlined,
-                                size: 16,
-                                color: scheme.primary,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                Labels.repeatEveryday,
-                                style: style.bodySmall,
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.repeat_rounded,
-                                size: 16,
-                                color: scheme.primary,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                Labels.reminders,
-                                style: style.bodySmall,
-                              ),
-                            ],
-                          ),
-                          const Spacer(
-                            flex: 2,
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Spacer(flex: 2),
+                            Text(
+                              habit.category,
+                              style: style.titleMedium,
+                            ),
+                            const Spacer(
+                              flex: 2,
+                            ),
+                            Text(
+                              habit.name,
+                              style: style.titleMedium,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -284,7 +258,7 @@ class HabbitPage extends ConsumerWidget {
                           child: Row(
                             children: [
                               OverviewWidget(
-                                title: '${Labels.days(a)}',
+                                title: Labels.days(a),
                                 subtitle: Labels.longestStreak,
                                 asset: Assets.fire,
                               ),
@@ -293,30 +267,9 @@ class HabbitPage extends ConsumerWidget {
                                 color: theme.dividerColor,
                               ),
                               OverviewWidget(
-                                title: '${Labels.days(b)}',
+                                title: Labels.days(a),
                                 subtitle: Labels.currentStreak,
                                 asset: Assets.flash,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Divider(),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              OverviewWidget(
-                                title: '${Labels.percentage(c)}',
-                                subtitle: Labels.completionRate,
-                                asset: Assets.rate,
-                              ),
-                              Container(
-                                width: 1,
-                                color: theme.dividerColor,
-                              ),
-                              OverviewWidget(
-                                title: '7',
-                                subtitle: Labels.averageEasinessScore,
-                                asset: Assets.leaf,
                               ),
                             ],
                           ),
@@ -353,6 +306,7 @@ class HabbitPage extends ConsumerWidget {
                   color: scheme.surface,
                   textColor: scheme.onPrimary,
                   onPressed: () {
+                  b=0;
                   },
                   child: Text(Labels.markHabitAsMissed),
                 ),

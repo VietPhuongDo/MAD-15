@@ -62,7 +62,7 @@ class Auth extends ChangeNotifier {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
-
+print(googleUser);
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
@@ -70,9 +70,11 @@ class Auth extends ChangeNotifier {
       await _auth.signInWithCredential(credential);
       _loading.end();
     } on FirebaseAuthException catch (e) {
+      print(e);
       _loading.stop();
       return Future.error(e.message ?? e.code);
     } catch (e) {
+      print(e);
       _loading.stop();
       return Future.error(e);
     }
