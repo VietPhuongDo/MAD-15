@@ -1,8 +1,7 @@
-
+import 'package:habit_app/core/repositories/habit_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/models/habit.dart';
-import '../../../core/repositories/habit_repository.dart';
 import '../../auth/providers/auth_provider.dart';
 
 final habitsProvider = StreamProvider<List<Habit>>(

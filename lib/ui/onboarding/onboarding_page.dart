@@ -3,18 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:habit_app/root.dart';
+import 'package:habit_app/ui/components/big_button.dart';
+import 'package:habit_app/ui/onboarding/onboarding_data.dart';
+import 'package:habit_app/utils/assets.dart';
+import 'package:habit_app/utils/labels.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/providers/cache_provider.dart';
-import '../../root.dart';
-import '../../utils/assets.dart';
 import '../../utils/constants.dart';
-import '../../utils/labels.dart';
 import '../auth/login_page.dart';
-import '../components/big_button.dart';
-import '../home/home_page.dart';
-import 'onboarding_data.dart';
 
 const List<OnboardingData> data = [
   OnboardingData(
@@ -56,14 +54,7 @@ class OnboardingPage extends HookConsumerWidget {
       await cache.setBool(Constants.seen, true);
       Navigator.pushNamedAndRemoveUntil(context, Root.route, (route) => false);
     }
-    // void done() async {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context)=> const HomePage(),
-    //     ),
-    //   );
-    // }
+
     return Scaffold(
       bottomNavigationBar: SafeArea(
         child: Padding(

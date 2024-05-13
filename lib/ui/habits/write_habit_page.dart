@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:habit_app/core/models/habit.dart';
+import 'package:habit_app/ui/components/app_back_button.dart';
+import 'package:habit_app/ui/components/custom_scaffold.dart';
+import 'package:habit_app/ui/components/loading_layer.dart';
+import 'package:habit_app/ui/components/status_button.dart';
+import 'package:habit_app/ui/habits/providers/write_habit_view_model_provider.dart';
+import 'package:habit_app/ui/habits/widgets/custom_switch.dart';
+import 'package:habit_app/utils/assets.dart';
+import 'package:habit_app/utils/formats.dart';
+import 'package:habit_app/utils/labels.dart';
+import 'package:habit_app/utils/utils.dart';
+import 'package:habit_app/utils/validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_firebase/ui/habits/providers/write_habit_view_model_provider.dart';
-import 'package:test_firebase/ui/habits/widgets/custom_switch.dart';
-import 'package:test_firebase/utils/formats.dart';
 
-import '../../core/models/habit.dart';
-import '../../utils/assets.dart';
-import '../../utils/labels.dart';
-import '../../utils/utils.dart';
-import '../../utils/validators.dart';
-import '../components/app_back_button.dart';
-import '../components/custom_scaffold.dart';
-import '../components/loading_layer.dart';
-import '../components/status_button.dart';
 import 'widgets/add_reminder_sheet.dart';
 
 class WriteHabitPage extends HookConsumerWidget {
@@ -49,31 +49,10 @@ class WriteHabitPage extends HookConsumerWidget {
                             Expanded(
                               child: TextFormField(
                                 textCapitalization: TextCapitalization.sentences,
-                                initialValue: model.initial.category,
-                                decoration: InputDecoration(
-                                  fillColor: scheme.surface,
-                                  hintText: "Enter category",
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                validator: Validators.required,
-                                onSaved: (v) => model.initial.category = v!,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                textCapitalization: TextCapitalization.sentences,
                                 initialValue: model.initial.name,
                                 decoration: InputDecoration(
                                   fillColor: scheme.surface,
-                                  hintText: "Enter Habit's name",
+                                  hintText: Labels.enterHabitName,
                                   contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20,
                                     vertical: 16,
@@ -84,6 +63,35 @@ class WriteHabitPage extends HookConsumerWidget {
                               ),
                             ),
                             SizedBox(width: 12),
+                            Stack(
+                              children: [
+                                SizedBox(
+                                  height: 52,
+                                  width: 52,
+                                  child: Card(
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        Assets.reader,
+                                        height: 35,
+                                        width: 35,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: Transform.translate(
+                                    offset: const Offset(4, -4),
+                                    child: CircleAvatar(
+                                      radius: 9,
+                                      backgroundColor: scheme.primary,
+                                      foregroundColor: scheme.surface,
+                                      child: Icon(Icons.add_rounded, size: 16),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                         const SizedBox(height: 8),
@@ -243,6 +251,13 @@ class WriteHabitPage extends HookConsumerWidget {
                             Text(
                               Labels.startThisHabit,
                               style: style.headlineSmall,
+                            ),
+                            Text(
+                              Labels.ullamco,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: style.bodySmall!.color,
+                              ),
                             ),
                             const SizedBox(height: 16),
                             SvgPicture.asset(

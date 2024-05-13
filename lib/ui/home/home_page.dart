@@ -2,23 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:habit_app/root.dart';
+import 'package:habit_app/ui/auth/providers/auth_provider.dart';
+import 'package:habit_app/ui/components/custom_scaffold.dart';
+import 'package:habit_app/ui/components/status_button.dart';
+import 'package:habit_app/ui/habits/habit_page.dart';
+import 'package:habit_app/ui/habits/providers/habits_provider.dart';
+import 'package:habit_app/ui/home/home_root.dart';
+import 'package:habit_app/utils/assets.dart';
+import 'package:habit_app/utils/formats.dart';
+import 'package:habit_app/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_firebase/utils/formats.dart';
 
-import '../../root.dart';
-import '../../utils/assets.dart';
 import '../../utils/labels.dart';
-import '../../utils/utils.dart';
-import '../auth/providers/auth_provider.dart';
 import '../components/circle_button.dart';
-import '../components/custom_scaffold.dart';
-import '../components/status_button.dart';
-import '../habits/providers/habits_provider.dart';
-import 'home_root.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
@@ -29,11 +30,11 @@ class HomePage extends ConsumerWidget {
       leading: CircleButton(
         child: Center(
           child: GestureDetector(
-                  onTap: () async {
-                    await ref.read(authProvider).signOut();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Root.route, (route) => false);
-                  },
+            onTap: () async {
+              await ref.read(authProvider).signOut();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Root.route, (route) => false);
+            },
             child: SvgPicture.asset(
               Assets.menuIcon,
               height: 24,
@@ -41,6 +42,10 @@ class HomePage extends ConsumerWidget {
             ),
           ),
         ),
+      ),
+      traling: CircleAvatar(
+        radius: 22,
+        backgroundImage: AssetImage(Assets.profile),
       ),
       body: ListView(
         children: [

@@ -1,20 +1,24 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:habit_app/root.dart';
+import 'package:habit_app/ui/auth/providers/auth_provider.dart';
+import 'package:habit_app/ui/auth/reset_password_page.dart';
+import 'package:habit_app/ui/auth/sign_up_page.dart';
+import 'package:habit_app/ui/auth/widgets/email_field.dart';
+import 'package:habit_app/ui/auth/widgets/facebook_button.dart';
+import 'package:habit_app/ui/auth/widgets/google_button.dart';
+import 'package:habit_app/ui/components/big_button.dart';
+import 'package:habit_app/ui/components/loading_layer.dart';
+import 'package:habit_app/utils/assets.dart';
+import 'package:habit_app/utils/labels.dart';
+import 'package:habit_app/utils/validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_firebase/ui/auth/providers/auth_provider.dart';
-import 'package:test_firebase/ui/auth/reset_password_page.dart';
-import 'package:test_firebase/ui/auth/sign_up_page.dart';
-import 'package:test_firebase/ui/auth/widgets/email_field.dart';
-import 'package:test_firebase/ui/auth/widgets/facebook_button.dart';
-import 'package:test_firebase/ui/auth/widgets/google_button.dart';
 
-import '../../root.dart';
-import '../../utils/labels.dart';
 import '../components/app_snackbar.dart';
-import '../components/big_button.dart';
-import '../components/loading_layer.dart';
 import 'widgets/password_field.dart';
 
 class LoginPage extends HookConsumerWidget {
@@ -77,10 +81,10 @@ class LoginPage extends HookConsumerWidget {
                     ]
                         .map(
                           (e) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: e,
-                      ),
-                    )
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: e,
+                          ),
+                        )
                         .toList(),
                     const SizedBox(height: 24),
                     Container(
@@ -114,7 +118,7 @@ class LoginPage extends HookConsumerWidget {
                                   key: formKey.value,
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.stretch,
+                                        CrossAxisAlignment.stretch,
                                     children: [
                                       EmailField(),
                                       SizedBox(height: 8),
@@ -123,27 +127,27 @@ class LoginPage extends HookConsumerWidget {
                                       Consumer(
                                         builder: (context, ref, child) {
                                           ref.watch(authProvider.select(
-                                                  (value) => value.loginEnabled));
+                                              (value) => value.loginEnabled));
                                           return BigButton(
                                             onPressed: model.loginEnabled
                                                 ? () async {
-                                              if (formKey
-                                                  .value.currentState!
-                                                  .validate()) {
-                                                try {
-                                                  await model.login();
-                                                  Navigator
-                                                      .pushNamedAndRemoveUntil(
-                                                      context,
-                                                      Root.route,
-                                                          (route) =>
-                                                      false);
-                                                } catch (e) {
-                                                  AppSnackBar.error(
-                                                      context, e);
-                                                }
-                                              }
-                                            }
+                                                    if (formKey
+                                                        .value.currentState!
+                                                        .validate()) {
+                                                      try {
+                                                        await model.login();
+                                                        Navigator
+                                                            .pushNamedAndRemoveUntil(
+                                                                context,
+                                                                Root.route,
+                                                                (route) =>
+                                                                    false);
+                                                      } catch (e) {
+                                                        AppSnackBar.error(
+                                                            context, e);
+                                                      }
+                                                    }
+                                                  }
                                                 : null,
                                             text: Labels.login,
                                           );
@@ -155,7 +159,7 @@ class LoginPage extends HookConsumerWidget {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                              const ResetPasswordPage(),
+                                                  const ResetPasswordPage(),
                                             ),
                                           );
                                         },
@@ -164,7 +168,7 @@ class LoginPage extends HookConsumerWidget {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             decoration:
-                                            TextDecoration.underline,
+                                                TextDecoration.underline,
                                           ),
                                         ),
                                       ),
@@ -185,7 +189,7 @@ class LoginPage extends HookConsumerWidget {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                      const SignUpPage(),
+                                                          const SignUpPage(),
                                                     ),
                                                   );
                                                 },

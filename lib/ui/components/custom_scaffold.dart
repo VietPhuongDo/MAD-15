@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'home_bg.dart';
+import 'package:habit_app/ui/components/home_bg.dart';
 
 class CustomScaffold extends StatelessWidget {
   const CustomScaffold(

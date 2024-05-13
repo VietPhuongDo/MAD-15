@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:habit_app/core/providers/loading_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../core/providers/loading_provider.dart';
 
 final authProvider = ChangeNotifierProvider<Auth>((ref) => Auth(ref));
 
@@ -62,7 +60,7 @@ class Auth extends ChangeNotifier {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
-print(googleUser);
+
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
@@ -70,11 +68,9 @@ print(googleUser);
       await _auth.signInWithCredential(credential);
       _loading.end();
     } on FirebaseAuthException catch (e) {
-      print(e);
       _loading.stop();
       return Future.error(e.message ?? e.code);
     } catch (e) {
-      print(e);
       _loading.stop();
       return Future.error(e);
     }

@@ -1,32 +1,24 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:habit_app/core/models/habit.dart';
+import 'package:habit_app/ui/auth/reset_password_page.dart';
+import 'package:habit_app/ui/components/app_back_button.dart';
+import 'package:habit_app/ui/components/big_button.dart';
+import 'package:habit_app/ui/components/custom_scaffold.dart';
+import 'package:habit_app/ui/components/status_button.dart';
+import 'package:habit_app/ui/habits/widgets/congrats_sheet.dart';
+import 'package:habit_app/ui/home/home_root.dart';
+import 'package:habit_app/utils/formats.dart';
+import 'package:habit_app/utils/labels.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:test_firebase/ui/habits/widgets/congrats_sheet.dart';
-import 'package:test_firebase/utils/formats.dart';
-import 'dart:math' show Random;
-import '../../core/models/habit.dart';
-import '../../core/repositories/habit_repository.dart';
+
 import '../../utils/assets.dart';
-import '../../utils/labels.dart';
 import '../../utils/utils.dart';
-import '../components/app_back_button.dart';
-import '../components/big_button.dart';
 import '../components/circle_button.dart';
-import '../components/cus_circle_button.dart';
-import '../components/custom_scaffold.dart';
-import '../components/status_button.dart';
-import '../home/home_root.dart';
-
-
-
-final habitProvider = StateProvider<Habit>((ref) => throw UnimplementedError());
 
 class HabbitPage extends ConsumerWidget {
   const HabbitPage({super.key,required this.habit});
   static const route = '/habbit';
-  //final CustomHabit customHabit;
 
   final Habit habit;
   @override
@@ -34,56 +26,16 @@ class HabbitPage extends ConsumerWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme;
     final scheme = theme.colorScheme;
-    final completedDays = habit.completedDays;
-    DateTime now = DateTime.now();
-    int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
-    int daysPassed = now.day;
-    final a = completedDays.where((day) {
-      try {
-        final completedDay = parseDate(day);
-        return completedDay.month == now.month && completedDay.year == now.year;
-      } catch (e) {
-        return false;
-      }
-    }).length;
-    int b=(daysPassed-a).toInt();
-    int c=(a/daysPassed*100).toInt();
     return CustomScaffold(
       title: habit.name,
       leading: const AppBackButton(),
-      traling:  DualCircleButtons(
-        buttons: [
-          CircleButton(
-            child: const Icon(Icons.edit_outlined),
-            onPressed: () {
-              ref.read(writerProvider.notifier).state = true;
-            },
-          ),
-          CircleButton(
-            child: const Icon(Icons.delete_outline),
-            onPressed: () {
-                final habitId = habit.id;
-                ref.read(habitRepositoryProvider).deleteHabit(habitId);
-                Navigator.pop(context);
-            },
-          ),
-          // Widget con khác tại đây
-          // Widget con khác tại đây
-        ],
-        // onPressed: () {
-        //   ref.read(writerProvider.notifier).state = true;
-        // },
-        // child: Icon(
-        //   Icons.edit_outlined,
-        // ),
-        // onPressed: () async {
-        //   final habitId = habit.id;
-        //   await ref.read(habitRepositoryProvider).deleteHabit(habitId);
-        //   Navigator.pop(context);
-        // },
-        // child: Icon(
-        //   Icons.delete_outline,
-        // ),
+      traling:  CircleButton(
+        onPressed: () {
+          ref.read(writerProvider.notifier).state = true;
+        },
+        child: Icon(
+          Icons.edit_outlined,
+        ),
       ),
       body: ListView(
         children: [
@@ -112,25 +64,51 @@ class HabbitPage extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Spacer(flex: 2),
-                            Text(
-                              habit.category,
-                              style: style.titleMedium,
-                            ),
-                            const Spacer(
-                              flex: 2,
-                            ),
-                            Text(
-                              habit.name,
-                              style: style.titleMedium,
-                            ),
-                          ],
-                        ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Spacer(flex: 2),
+                          Text(
+                            habit.name,
+                            style: style.titleMedium,
+                          ),
+                          const Spacer(flex: 2),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.notifications_none_outlined,
+                                size: 16,
+                                color: scheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                Labels.repeatEveryday,
+                                style: style.bodySmall,
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.repeat_rounded,
+                                size: 16,
+                                color: scheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                Labels.reminders,
+                                style: style.bodySmall,
+                              ),
+                            ],
+                          ),
+                          const Spacer(
+                            flex: 2,
+                          ),
+                        ],
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -148,7 +126,7 @@ class HabbitPage extends ConsumerWidget {
                       icon: Icon(Icons.keyboard_arrow_left_rounded),
                     ),
                     Text(
-                      DateFormat('MMMM').format(DateTime.now()),
+                      'January',
                       style: style.titleMedium,
                     ),
                     IconButton(
@@ -174,55 +152,47 @@ class HabbitPage extends ConsumerWidget {
                       .toList(),
                 ),
                 const SizedBox(height: 2),
-                GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                    crossAxisSpacing: 6,
-                    mainAxisSpacing: 6,
-                    childAspectRatio: 47 / 72,
-                  ),
-                  itemCount: Utils.allDaysOfMonth(DateTime.now()).length,
+                GridView.count(
+                  crossAxisCount: 7,
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: 47 / 72,
+                  mainAxisSpacing: 6,
+                  crossAxisSpacing: 6,
                   padding: const EdgeInsets.all(6),
-                  itemBuilder: (BuildContext context, int index) {
-                    final day = Utils.allDaysOfMonth(DateTime.now())[index];
-                    final completedDate = DateFormat('dd-MM-yyyy').format(day);
-                    final isCompleted = habit.completedDays.contains(completedDate);
-                    final isCurrentMonth = day.month == DateTime.now().month;
-                    final completedDayOfWeek = DateFormat('E').format(day).toUpperCase();
-                    final count =habit.frequency[completedDayOfWeek]??0;
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: scheme.primaryContainer,
-                      ),
-                      child: Column(
-                        children: [
-                          const Spacer(flex: 2),
-                          Text(
-                            '${day.day}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: day.month != DateTime.now().month
-                                  ? scheme.onPrimary.withOpacity(0.3)
-                                  : null,
-                            ),
-                          ),
-                          const Spacer(),
-                          Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: StatusButton(
-                                value:isCurrentMonth && isCompleted ? count : 0,
+                  children: Utils.allDaysOfMonth(DateTime.now())
+                      .map(
+                        (e) => Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: scheme.primaryContainer),
+                          child: Column(
+                            children: [
+                              const Spacer(flex: 2),
+                              Text(
+                                '${e.day}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: e.month != DateTime.now().month
+                                      ? scheme.onPrimary.withOpacity(0.3)
+                                      : null,
+                                ),
                               ),
-                            ),
+                              const Spacer(),
+                              const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: StatusButton(
+                                    value: 1,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: 8),
               ],
@@ -258,7 +228,7 @@ class HabbitPage extends ConsumerWidget {
                           child: Row(
                             children: [
                               OverviewWidget(
-                                title: Labels.days(a),
+                                title: Labels.days(20),
                                 subtitle: Labels.longestStreak,
                                 asset: Assets.fire,
                               ),
@@ -267,9 +237,30 @@ class HabbitPage extends ConsumerWidget {
                                 color: theme.dividerColor,
                               ),
                               OverviewWidget(
-                                title: Labels.days(a),
+                                title: Labels.days(0),
                                 subtitle: Labels.currentStreak,
                                 asset: Assets.flash,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              OverviewWidget(
+                                title: Labels.percentage(98),
+                                subtitle: Labels.completionRate,
+                                asset: Assets.rate,
+                              ),
+                              Container(
+                                width: 1,
+                                color: theme.dividerColor,
+                              ),
+                              OverviewWidget(
+                                title: '7',
+                                subtitle: Labels.averageEasinessScore,
+                                asset: Assets.leaf,
                               ),
                             ],
                           ),
@@ -282,16 +273,6 @@ class HabbitPage extends ConsumerWidget {
                 BigButton(
                   
                   onPressed: () {
-                    String completedDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
-                    habit.completedDays.add(completedDate);
-                    FirebaseFirestore.instance.collection('habits').doc(habit.id).update({
-                      'completedDays': FieldValue.arrayUnion([completedDate]),
-                    });
-
-                    // Kiểm tra xem ngày hiện tại đã được hoàn thành hay chưa
-
-                    // Nếu chưa hoàn thành thì thêm ngày hiện tại vào danh sách hoàn thành
-
                     showModalBottomSheet(
                       context: context,
                       backgroundColor: Colors.transparent,
@@ -305,9 +286,7 @@ class HabbitPage extends ConsumerWidget {
                 MaterialButton(
                   color: scheme.surface,
                   textColor: scheme.onPrimary,
-                  onPressed: () {
-                  b=0;
-                  },
+                  onPressed: () {},
                   child: Text(Labels.markHabitAsMissed),
                 ),
               ],
@@ -318,13 +297,7 @@ class HabbitPage extends ConsumerWidget {
     );
   }
 }
-DateTime parseDate(String date) {
-  final parts = date.split('-');
-  final day = int.parse(parts[0]);
-  final month = int.parse(parts[1]);
-  final year = int.parse(parts[2]);
-  return DateTime(year, month, day);
-}
+
 class OverviewWidget extends StatelessWidget {
   const OverviewWidget({
     super.key,
@@ -374,5 +347,3 @@ class OverviewWidget extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_app/core/models/habit.dart';
+import 'package:habit_app/core/providers/loading_provider.dart';
+import 'package:habit_app/core/repositories/habit_repository.dart';
+import 'package:habit_app/utils/formats.dart';
+import 'package:habit_app/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_firebase/utils/formats.dart';
 
-import '../../../core/models/habit.dart';
-import '../../../core/providers/loading_provider.dart';
-import '../../../core/repositories/habit_repository.dart';
-import '../../../utils/utils.dart';
 import '../../auth/providers/auth_provider.dart';
 
 final writeHabitViewModelProvider =
